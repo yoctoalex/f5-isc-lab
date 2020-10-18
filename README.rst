@@ -77,7 +77,7 @@ You can also track regions on the interactive map
 
 .. figure:: _figures/add_region_map.png
 
-Now let’s test the protected app, as well as the multi-region support using the Opera browser. As you remember, we now have two endpoints for users in North America and Europe, so we'll test those two locations. Keep in mind that Essential App Protect uses performance-based routing to determine the closest endpoint to drive the users to. This means for true geo-proximity based routing it's best to use a service like the `F5 DNS Load Balancing <https://github.com/f5devcentral/f5-cloudservicednslab>`_.
+Now let’s test the protected app, as well as the multi-region support using the Opera browser. As you remember, we now have two endpoints for users in North America and Europe, so we'll test those two locations. Keep in mind that Essential App Protect uses performance-based routing to determine the closest endpoint to drive the users to.
 
 Open the Opera browser, click **VPN** and first select **Americas**. This will simulate your entering the test app (BuyTime Auction) from the America region. Then copy FQDN name in Load balanced record properties and paste into the browser. You will get to that IP endpoint which is located in North America, US East (N. Virginia).
 
@@ -108,6 +108,6 @@ The feature will be deployed in few minutes
 
 You will see "Deployed" status on the main page
 
-.. figure:: _figures/cloudfront_setup_ready.png
+.. figure:: _figures/cloudfront_ready.png
 
 TODO: TEST CLOUDFRONT ???
