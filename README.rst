@@ -30,65 +30,65 @@ SQL Injection attack inserts a SQL query via the input data field in the web app
 
 Let's now follow the steps below to simulate SQL Injection attack via browser and our "BuyTime Auction" app. 
 
-`a)` Copy your FQDN from the F5 Cloud Services portal and paste it to your browser. In the **LOG IN** window fill in username value as follows (including single quotes) **' OR 1=1 --'** and use any password as the value. Click **LOGIN**.
+`a)` Copy your FQDN from the F5 Cloud Services Portal and paste it to your browser. In the **LOG IN** window fill in username value as follows (including single quotes) **' OR 1=1 --'** and use any password as the value. Click **LOGIN**.
 
 .. figure:: _figures/sql_attack_not_blocked.png
 
-`b)` Turn on High-risk Attack Mitigation enforcement in the Blocking mode
+`b)` Go back to the F5 Cloud Services Portal, the **High-risk Attack Mitigation** tab and toggle **Blocking Mode** on.
 
 .. figure:: _figures/sql_attack_turn_on.png
 
-And repeat the attack. Now it will be blocked by Essential App Protect
+`c)` And now simulate the attack again by repeating the step **a)** above. This time it will be blocked by Essential App Protect.
 
 .. figure:: _figures/sql_attack_blocked.png
 
-Detailed events log you can find in the events stream
+You can find detailed event log in the events stream in the F5 Cloud Services Portal, the **VIEW EVENTS** card. 
 
 .. figure:: _figures/sql_attack_events_stream.png
 
 3. Add an Additional Endpoint
 ************************************************************************
 
-Let's add the second endpoint located in Europe for European users.
+For now our app has only one endpoint located in Asia Pacific (Sydney) and deployed on Amazon AWS. But our application is serving a global audience, so let's add the second endpoint located in Europe for European users.
 
-In the description field you can find the information required for the second region
+`a)` Go to the F5 Cloud Services Portal, the **PROTECT APPLICATION** card. There, in the **Description** field of the **General** tab, you can find the information required for the second region.
 
 .. figure:: _figures/info_in_description.png
 
-Go to the region details
+`b)` Select **Manage regions**.
 
 .. figure:: _figures/manage_regions.png
 
-Click add region
+`c)` Hit **Add** to add the new region:
 
 .. figure:: _figures/add_region.png
 
-Fill the region details with information found in the description field and click save
+`d)` Fill in the region details with the information found in the **Description** field above and **Save** the settings.
 
 .. figure:: _figures/add_region_details.png
 
-The application will be deployed to the second region. It will take several minutes to complete
+The application will be deployed to the second region. It will take several minutes to complete.
 
 .. figure:: _figures/add_region_deploying.png
 
-When the app will be deployed you will see an active state indicator
+When the app is deployed, you will see the **Active** state indicator.
 
 .. figure:: _figures/add_region_active.png
 
 **TODO: UPDATE SCREENSHOT**
-You can also track regions on the interactive map
+You can also track regions on the interactive map. Go to the **MONITOR APPLICATION** card where you can see that both endpoints are shown on the map. 
 
 .. figure:: _figures/add_region_map.png
 
-Now let’s test the protected app, as well as the multi-region support using the Opera browser. As you remember, we now have two endpoints for users in North America and Europe, so we'll test those two locations. Keep in mind that Essential App Protect uses performance-based routing to determine the closest endpoint to drive the users to.
+`e)` Now let’s test the protected app, as well as the multi-region support using the Opera browser. As you remember, we now have two endpoints for users in Asia Pacific and Europe, so we'll test those two locations. Keep in mind that Essential App Protect uses performance-based routing to determine the closest endpoint to drive the users to.
 
-Open the Opera browser, click **VPN** and first select **Americas**. This will simulate your entering the test app (BuyTime Auction) from the America region. Then copy FQDN name in Load balanced record properties and paste into the browser. You will get to that IP endpoint which is located in North America, US East (N. Virginia).
+Open the Opera browser, click **VPN** and first select **Asia**. This will simulate your entering the test app (BuyTime Auction) from the Asian region. Then copy FQDN name in Load balanced record properties and paste into the browser. You will get to that IP endpoint which is located in Asia Pacific (Sydney).
 
 **TODO: UPDATE SCREENSHOT**
 
 .. figure:: _figures/opera_america.png
 
-And now select **Europe** in **VPN** of the Opera browser and **Reload** the page. You will get to the European IP endpoint, which means that European users are directed to that IP Endpoint.
+`f)` And now select **Europe** in **VPN** of the Opera browser and **Reload** the page. You will get to the European IP endpoint, which means that European users are directed to that IP Endpoint.
 
 **TODO: UPDATE SCREENSHOT**
 
