@@ -94,22 +94,24 @@ Open the Opera browser, click **VPN** and first select **Asia**. This will simul
 
 .. figure:: _figures/opera_europe.png
 
-4. Enable CloudFront caching
+4. Enable CloudFront Caching
 ************************************************************************
 
-Now let's turn on the CloudFront. Go back to the Essential App Protect
+Caching in Essential App Protect allows you to work with Amazon CloudFront that delivers content globally by caching it in different locations around the world. Now let's deploy caching and use CloudFront as caching provider. 
+
+`a)` Go back to the F5 Cloud Services portal, **Essential App Protect**, the **PROTECT APPLICATION** card and hit **Manage** for **CACHING**.
 
 .. figure:: _figures/cloudfront_setup.png
 
-Turn on "caching", select "EdgeTier 3", add "Accept" and "Authorization" headers forwarding, forward "all" cookies and click the update button
+`b)` Check **Enable Caching**, select **EdgeTier 3** which uses all edges and provides the best performance, add **Accept** and **Authorization** headers forwarding, forward **all** cookies and click the **Update** button.
 
 .. figure:: _figures/cloudfront_setup_details.png
 
-The feature will be deployed in few minutes
+The feature will be deployed in a few minutes.
 
 .. figure:: _figures/cloudfront_setup_deploying.png
 
-You will see "Deployed" status on the main page
+You will see **Deployed** status on the main page.
 
 .. figure:: _figures/cloudfront_ready.png
 
