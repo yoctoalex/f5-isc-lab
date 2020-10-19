@@ -6,7 +6,8 @@ LAB: Lab description here
 1. Accept the Invite
 ************************************************************************
 In order to test geo-proximity rules, you can use your own VPN service (if you have one), remote desktop to a VM in a different region (if you have one), or alternatively use the Opera browser as described below.
-Open the Opera browser, click **Settings**, **Advanced**, **Features** and then **Enable VPN**.
+
+1) Open the Opera browser, click **Settings**, **Advanced**, **Features** and then **Enable VPN**.
 
 .. figure:: _figures/opera_setup.png
 
@@ -22,7 +23,7 @@ Go to the Essential App Protect tab and find your application. We have pre-creat
 
 .. figure:: _figures/open_the_app.png
 
-1. Simulate SQL Injection Attack
+2. Simulate SQL Injection Attack
 ************************************************************************
 
 SQL Injection attack inserts a SQL query via the input data field in the web application. Such attacks could potentially read sensitive data, modify and destroy it. More detailed information can be found `here <https://bit.ly/2ZUv0Xl>`_.
