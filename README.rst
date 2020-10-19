@@ -3,22 +3,22 @@ LAB: Lab description here
 
 .. contents:: Table of Contents
 
-1. Accept the invite
+1. Accept the Invite
 ************************************************************************
-In order to test geo-proximity rules, you can use your own VPN service (if you have one), remote desktop to a VM in a different region (if you have one), or alternatively use the Opera browser.
-Open the Opera browser, click Settings, Advanced, Features and then Enable VPN.
+In order to test geo-proximity rules, you can use your own VPN service (if you have one), remote desktop to a VM in a different region (if you have one), or alternatively use the Opera browser as described below.
+Open the Opera browser, click **Settings**, **Advanced**, **Features** and then **Enable VPN**.
 
 .. figure:: _figures/opera_setup.png
 
-Accept the invite we sent to your mail
+Accept the invite we sent to your mail.
 
 .. figure:: _figures/invite.png
 
-Click on the username icon at the top right corner and switch account to the ISC-Lab-xxx (where xxx is your unique id. you can find it in the invite)
+Click on the username icon at the top right corner and switch account to the ISC-Lab-xxx (where xxx is your unique id which can be found in the invite).
 
 .. figure:: _figures/switch_account.png
 
-Go to the Essential App Protect tab and find your application. We have pre-created it for you. The application name is isc-lab-xxx.securelab.online where xxx is your unique id
+Go to the Essential App Protect tab and find your application. We have pre-created it for you. The application name is isc-lab-xxx.securelab.online where xxx is your unique id.
 
 .. figure:: _figures/open_the_app.png
 
@@ -27,7 +27,7 @@ Go to the Essential App Protect tab and find your application. We have pre-creat
 
 SQL Injection attack inserts a SQL query via the input data field in the web application. Such attacks could potentially read sensitive data, modify and destroy it. More detailed information can be found `here <https://bit.ly/2ZUv0Xl>`_.
 
-Let's now simulate SQL Injection attack via browser and our "BuyTime Auction" app. Copy your FQDN from the F5 Cloud Services portal and paste to your browser. In the **LOG IN** window fill in username value as follows (including singls quotes) **' OR 1=1 --'** and use any password as the value. Click **LOGIN**.
+Let's now simulate SQL Injection attack via browser and our "BuyTime Auction" app. Copy your FQDN from the F5 Cloud Services portal and paste to your browser. In the **LOG IN** window fill in username value as follows (including single quotes) **' OR 1=1 --'** and use any password as the value. Click **LOGIN**.
 
 .. figure:: _figures/sql_attack_not_blocked.png
 
