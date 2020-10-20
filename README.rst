@@ -1,25 +1,50 @@
-LAB: Lab description here
-==================================================
+LAB: F5 Essential App Protect - Multi-Region with CloudFront (ISC)
+==================================================================
 
 .. contents:: Table of Contents
 
-1. Accept the Invite
-************************************************************************
-In order to test geo-proximity rules, you can use your own VPN service (if you have one), remote desktop to a VM in a different region (if you have one), or alternatively use the Opera browser as described below.
+Background & Scenario
+#####################
 
-`a)` Open the Opera browser, click **Settings**, **Advanced**, **Features** and then **Enable VPN**.
+You oversee application delpoyment within your organization. One of these apps is BuyTime Auction: a modern microservices-based written in React.JS and running on NGINX. It was built by an outsourced team in record speed, which raised some questions on whether "proper" security testing has been done. You don't have time, resources, or in-house expertise to put the app through rigorous test.
+
+Your team piloted F5 Essential App Protect and believes it provides the checkbox-simple security that you need. First, you like the built-in protection across a number of vectors, which is a useful "isurance policy" for unknowns that potentially exist any time you leverage many frameworks in the modern app dev approach.
+
+However, where you really think F5 Essential App Protect is going to be a game-changer for this project, is in the following 2 features: 
+- the fact it can enable multi-region protection for this Auction app, since it has multiple endpoints around the world to serve its global audience, and
+- caching capability offered by intergrated AWS CloudFront feature of this innovative cloud-based WAF.
+
+You are now tasked with enabling both of these capabilities. You're excited and ready to go!
+
+Pre-Requisites
+###############
+
+- Main browser: any modern browser (Chrome recommended) for working with the UI (and this lab)
+- Opera browser: for simulating geo-specific traffic (https://www.opera.com/)
+
+In order to use F5 Essential App Protect you need access to F5 Cloud Services and be logged in with a valid user account. If you need to sign up, or if you already have one, use your Main browser to log into the `F5 Cloud Services portal <http://bit.ly/f5csreg>`_.
+
+You can use use AWS CloudFront directly from F5 Essential App Protect. 
+
+.. figure:: https://github.com/f5devcentral/f5-cloudservice-eap-lb-lab/raw/master/_figures/0_1.png
+
+1. Getting started with the Lab Environment
+************************************************************************
+In order to test geo-proximity rules, you can use either use your own VPN service (if you have one), a remote desktop to a VM in a different region (if you have one), or alternatively use the Opera browser as described below.
+
+`a)` Configure the Opera browser to enable built-in VPN: open the Opera browser, click **Settings**, **Advanced**, **Features** and then **Enable VPN**.
 
 .. figure:: _figures/opera_setup.png
 
-`b)` In your email, accept the invite we sent you.
+`b)` In your email, accept the invite that was sent you for this lab. Note the unique ID for the Organization (ISC-Lab-???) that you were asked to join, where ??? will be your own personalized ISC Lab Organization ID (Org ID). Take node of this Org ID, you will need it later. 
 
 .. figure:: _figures/invite.png
 
-`c)` Go to the F5 Cloud Services Portal and click on the username icon in the top right corner and switch account to the ISC-Lab-xxx (where xxx is your unique id which can be found in the invite).
+`c)` Inside your main browser F5 Cloud Services Portal and click on the username icon in the top right corner and switch account to the ISC-Lab-??? personally created just for you with your Org ID.
 
 .. figure:: _figures/switch_account.png
 
-`d)` Go to the Essential App Protect tab and find your application. We have pre-created it for you. The application name is isc-lab-xxx.securelab.online where xxx is your unique id.
+`d)` Go to the Essential App Protect tab and find your application. We have pre-created one for you. The application name is isc-lab-xxx.securelab.online where xxx is your unique id.
 
 .. figure:: _figures/open_the_app.png
 
