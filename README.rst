@@ -40,15 +40,15 @@ Running the Lab
 1. Getting started with the Lab Environment
 ************************************************************************
 
-`a)` In your email, accept the invite that was sent you for this lab. Note the unique ID for the Organization (ISC-Lab-***) that you were asked to join, where *** will be your own personalized ISC Lab Organization ID (Org ID). Take note of this Org ID, you will need it later. 
+`a)` In your email, accept the invite that was sent you for this lab. Note the unique ID for the Organization (ISC-Lab-$$$) that you were asked to join, where $$$ will be your own personalized ISC Lab Organization ID (Org ID). Take note of this Org ID, you will need it later. 
 
 .. figure:: _figures/invite.png
 
-`b)` Inside your main browser F5 Cloud Services Portal and click on the username icon in the top right corner and switch account to the ISC-Lab-*** created personally just for you with your Org ID.
+`b)` Inside your main browser F5 Cloud Services Portal and click on the username icon in the top right corner and switch account to the ISC-Lab-$$$ created personally just for you with your Org ID.
 
 .. figure:: _figures/switch_account.png
 
-`c)` Go to the Essential App Protect tab and find your application. We have pre-created one for you. The application name is isc-lab-***.securelab.online where *** is your unique id.
+`c)` Go to the Essential App Protect tab and find your application. We have pre-created one for you. The application name is isc-lab-$$$.securelab.online where $$$ is your unique id.
 
 .. figure:: _figures/open_the_app.png
 
@@ -79,10 +79,10 @@ You can find detailed event log in the events stream in the F5 Cloud Services Po
 
 .. figure:: _figures/sql_attack_events_stream.png
 
-3. Add an Additional Endpoint
+3. Add an Additional Region Endpoint
 ************************************************************************
 
-For now our app has only one endpoint located in Asia Pacific (Sydney) and deployed on Amazon AWS. But our application is serving a global audience, so let's add the second endpoint located in Europe for European users.
+For now, our app only has one endpoint located in Asia Pacific (Sydney) and deployed on Amazon AWS. But our application is serving a global audience, so let's add the second endpoint located in Europe for European users. *NOTE: Your regions may be different, this is just an example*
 
 `a)` Go to the F5 Cloud Services Portal, the **PROTECT APPLICATION** card. There, in the **Description** field of the **General** tab, you can find the information required for the second region.
 
@@ -148,4 +148,15 @@ You will see **Deployed** status on the main page.
 
 .. figure:: _figures/cloudfront_ready.png
 
-TODO: TEST CLOUDFRONT ???
+`c)` To test CloudFront, let's.... 
+
+What's Next?
+###############
+
+Good job! If you've gotten this far, you've successfully added another regional endpoint and turned on CloudFront from F5 Essential App Protect. Have you looked at any of the othe labs available, or looked at the F5 Essential App ProtectAnsible project that automates many of its routine tasks?  Here are some things for you to look at:
+
+* EAP Lab
+* EAP / DNS Lab
+* Ansible repository
+
+Thanks for taking the time to do this lab, let us know any issues in the Issues section of this repo. 
