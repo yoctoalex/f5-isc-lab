@@ -22,42 +22,50 @@ Pre-Requisites
 - Main browser: any modern browser (Chrome recommended) for working with the UI (and this lab)
 - Opera browser: for simulating geo-specific traffic (https://www.opera.com/)
 
-In order to use F5 Essential App Protect you need access to F5 Cloud Services and be logged in with a valid user account. If you need to sign up, or if you already have one, use your Main browser to log into the `F5 Cloud Services portal <http://bit.ly/f5csreg>`_.
-
-You can use use AWS CloudFront directly from F5 Essential App Protect. 
+`a)` In order to use F5 Essential App Protect you need access to F5 Cloud Services and be logged in with a valid user account. If you need to sign up, or if you already have one, use your Main browser to log into the `F5 Cloud Services portal <http://bit.ly/f5csreg>`_.
 
 .. figure:: https://github.com/f5devcentral/f5-cloudservice-eap-lb-lab/raw/master/_figures/0_1.png
 
-1. Getting started with the Lab Environment
-************************************************************************
-In order to test geo-proximity rules, you can use either use your own VPN service (if you have one), a remote desktop to a VM in a different region (if you have one), or alternatively use the Opera browser as described below.
+You can use use AWS CloudFront directly from F5 Essential App Protect, no additional accounts required. 
 
-`a)` Configure the Opera browser to enable built-in VPN: open the Opera browser, click **Settings**, **Advanced**, **Features** and then **Enable VPN**.
+`b)` In order to test geo-proximity rules, you can use either use your own VPN service (if you have one), a remote desktop to a VM in a different region (if you have one), or alternatively use the Opera browser as described below.
+
+Configure the Opera browser to enable built-in VPN: open the Opera browser, click **Settings**, **Advanced**, **Features** and then **Enable VPN**.
 
 .. figure:: _figures/opera_setup.png
 
-`b)` In your email, accept the invite that was sent you for this lab. Note the unique ID for the Organization (ISC-Lab-???) that you were asked to join, where ??? will be your own personalized ISC Lab Organization ID (Org ID). Take node of this Org ID, you will need it later. 
+Running the Lab
+###############
+
+1. Getting started with the Lab Environment
+************************************************************************
+
+`a)` In your email, accept the invite that was sent you for this lab. Note the unique ID for the Organization (ISC-Lab-***) that you were asked to join, where *** will be your own personalized ISC Lab Organization ID (Org ID). Take note of this Org ID, you will need it later. 
 
 .. figure:: _figures/invite.png
 
-`c)` Inside your main browser F5 Cloud Services Portal and click on the username icon in the top right corner and switch account to the ISC-Lab-??? personally created just for you with your Org ID.
+`b)` Inside your main browser F5 Cloud Services Portal and click on the username icon in the top right corner and switch account to the ISC-Lab-*** created personally just for you with your Org ID.
 
 .. figure:: _figures/switch_account.png
 
-`d)` Go to the Essential App Protect tab and find your application. We have pre-created one for you. The application name is isc-lab-xxx.securelab.online where xxx is your unique id.
+`c)` Go to the Essential App Protect tab and find your application. We have pre-created one for you. The application name is isc-lab-***.securelab.online where *** is your unique id.
 
 .. figure:: _figures/open_the_app.png
 
-2. Simulate SQL Injection Attack
+2. Run a SQL Injection Attack
 ************************************************************************
 
-SQL Injection attack inserts a SQL query via the input data field in the web application. Such attacks could potentially read sensitive data, modify and destroy it. More detailed information can be found `here <https://bit.ly/2ZUv0Xl>`_.
+Alright. Now you want to "kick the tires" on the app, to see just how poorly it may have been coded. You're thinking why not try a SQL Injection attack first, which inserts a SQL query via the input data field in the web application. Such attacks could potentially read sensitive data, modify and destroy it. More detailed information can be found `here <https://bit.ly/2ZUv0Xl>`_.
 
-Let's now follow the steps below to simulate SQL Injection attack via browser and our "BuyTime Auction" app. 
+Let's now follow the steps below to send a SQL Injection attack via browser to our "BuyTime Auction" app. 
 
-`a)` Copy your FQDN from the F5 Cloud Services Portal and paste it to your browser. In the **LOG IN** window fill in username value as follows (including single quotes) **' OR 1=1 --'** and use any password as the value. Click **LOGIN**.
+`a)` Copy your FQDN from the F5 Cloud Services Portal and paste it to your browser. In the **LOG IN** window fill in username value as follows (including single quotes) **' OR 1=1 --'** and use any password as the value. *NOTE the space after --, it's needed for the attack*. Click **LOGIN**.
 
 .. figure:: _figures/sql_attack_not_blocked.png
+
+As you can see this attack bypassed the login and is showing the contents of the catalog that should be restricted only to valid users. Not good! 
+
+But, no worries! This app has already been configured with F5 Essential App Protect, and you know that all you need to do is to turn on the Blocking mode on. Let's do this now.
 
 `b)` Go back to the F5 Cloud Services Portal, the **High-risk Attack Mitigation** tab and toggle **Blocking Mode** on.
 
