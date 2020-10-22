@@ -18,7 +18,7 @@ However, you think Essential App Protect is a game-changer for the BuyTime proje
 - caching capability offered by intergrated AWS CloudFront feature of this innovative cloud-based WAF (and you're serving a global audience!)
 - easily adding additional app instances without any need to re-configure multi-region protection!
 
-Your "Organization"
+Your "Mission"
 *******************
 
 Your team has already done a bunch of work ahead of time:
