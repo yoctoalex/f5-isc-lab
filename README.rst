@@ -20,19 +20,12 @@ Pre-Requisites
 ###############
 
 - Main browser: any modern browser (Chrome recommended) for working with the UI (and this lab)
-- Opera browser: for simulating geo-specific traffic (https://www.opera.com/)
 
-`a)` In order to use F5 Essential App Protect you need access to F5 Cloud Services and be logged in with a valid user account. If you need to sign up, or if you already have one, use your Main browser to log into the `F5 Cloud Services portal <http://bit.ly/f5csreg>`_.
+In order to use F5 Essential App Protect you need access to F5 Cloud Services and be logged in with a valid user account. If you need to sign up, or if you already have one, use your Main browser to log into the `F5 Cloud Services portal <http://bit.ly/f5csreg>`_.
 
 .. figure:: https://github.com/f5devcentral/f5-cloudservice-eap-lb-lab/raw/master/_figures/0_1.png
 
 You can use use AWS CloudFront directly from F5 Essential App Protect, no additional accounts required. 
-
-`b)` In order to test geo-proximity rules, you can use either use your own VPN service (if you have one), a remote desktop to a VM in a different region (if you have one), or alternatively use the Opera browser as described below.
-
-Configure the Opera browser to enable built-in VPN: open the Opera browser, click **Settings**, **Advanced**, **Features** and then **Enable VPN**.
-
-.. figure:: _figures/opera_setup.png
 
 Running the Lab
 ###############
@@ -82,7 +75,7 @@ You can find detailed event log in the events stream in the F5 Cloud Services Po
 3. Add an Additional Region Endpoint
 ************************************************************************
 
-For now, our app only has one endpoint located in Asia Pacific (Sydney) and deployed on Amazon AWS. But our application is serving a global audience, so let's add the second endpoint located in Europe for European users. *NOTE: Your regions may be different, this is just an example*
+For now, our app only has one endpoint located in US East (N. Virginia) and deployed on Amazon AWS. Your regions can be different. But our application is serving a global audience, so let's add the second endpoint located in Europe for European users. *NOTE: Your regions may be different, this is just an example*
 
 `a)` Go to the F5 Cloud Services Portal, the **PROTECT APPLICATION** card. There, in the **Description** field of the **General** tab, you can find the information required for the second region.
 
@@ -108,47 +101,20 @@ When the app is deployed, you will see the **Active** state indicator.
 
 .. figure:: _figures/add_region_active.png
 
-**TODO: UPDATE SCREENSHOT**
-You can also track regions on the interactive map. Go to the **MONITOR APPLICATION** card where you can see that both endpoints are shown on the map. 
+Now let's open the app in the browser and we will see that the region changed to the closed one.
 
-.. figure:: _figures/add_region_map.png
+.. figure:: _figures/region_europe.png
 
-`e)` Now let’s test the protected app, as well as the multi-region support using the Opera browser. As you remember, we now have two endpoints for users in Asia Pacific and Europe, so we'll test those two locations. Keep in mind that Essential App Protect uses performance-based routing to determine the closest endpoint to drive the users to.
-
-Open the Opera browser, click **VPN** and first select **Asia**. This will simulate your entering the test app (BuyTime Auction) from the Asian region. Then copy FQDN name in Load balanced record properties and paste into the browser. You will get to that IP endpoint which is located in Asia Pacific (Sydney).
-
-**TODO: UPDATE SCREENSHOT**
-
-.. figure:: _figures/opera_america.png
-
-`f)` And now select **Europe** in **VPN** of the Opera browser and **Reload** the page. You will get to the European IP endpoint, which means that European users are directed to that IP Endpoint.
-
-**TODO: UPDATE SCREENSHOT**
-
-.. figure:: _figures/opera_europe.png
-
-4. Enable CloudFront Caching
+4. CloudFront Caching
 ************************************************************************
 
-Caching in Essential App Protect allows you to work with Amazon CloudFront that delivers content globally by caching it in different locations around the world. Now let's deploy caching and use CloudFront as caching provider. 
+Lets open the Developer tools by pressing Ctrl+Shift+I or From "Browser settings" => "More tools" => "Developer tools". Open the Network tab and disable caching and preserve logs.
 
-`a)` Go back to the F5 Cloud Services portal, **Essential App Protect**, the **PROTECT APPLICATION** card and hit **Manage** for **CACHING**.
+.. figure:: _figures/dev_tools.png
 
-.. figure:: _figures/cloudfront_setup.png
+Now we need to open two browser windows. At the first one we open the website using a domain name and at the second one we use the IP address from the description field in step 3.a. Try to press page refresh couple times and check the page load time. In the first window with domain name it's faster because the traffic flows through the CloudFront CDN.
 
-`b)` Check **Enable Caching**, select **EdgeTier 3** which uses all edges and provides the best performance, add **Accept** and **Authorization** headers forwarding, forward **all** cookies and click the **Update** button.
-
-.. figure:: _figures/cloudfront_setup_details.png
-
-The feature will be deployed in a few minutes.
-
-.. figure:: _figures/cloudfront_setup_deploying.png
-
-You will see **Deployed** status on the main page.
-
-.. figure:: _figures/cloudfront_ready.png
-
-`c)` To test CloudFront, let's.... 
+.. figure:: _figures/side_by_side.png
 
 What's Next?
 ###############
