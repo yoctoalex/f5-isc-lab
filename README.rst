@@ -97,6 +97,10 @@ You can find detailed event log in the events stream in the F5 Cloud Services Po
 3. Add an Additional Region Endpoint
 ************************************************************************
 
+TODO: Add description
+
+.. figure:: _figures/side_by_side_america.png
+
 For now, our app only has one endpoint located in US East (N. Virginia) and deployed on Amazon AWS. Your regions can be different. But our application is serving a global audience, so let's add the second endpoint located in Europe for European users. *NOTE: Your regions may be different, this is just an example*
 
 `a)` Go to the F5 Cloud Services Portal, the **PROTECT APPLICATION** card. There, in the **Description** field of the **General** tab, you can find the information required for the second region.
@@ -136,7 +140,7 @@ Lets open the Developer tools by pressing Ctrl+Shift+I or From "Browser settings
 
 Now we need to open two browser windows. At the first one we open the website using a domain name and at the second one we use the IP address from the description field in step 3.a. Try to press page refresh couple times and check the page load time. In the first window with domain name it's faster because the traffic flows through the CloudFront CDN.
 
-.. figure:: _figures/side_by_side.png
+.. figure:: _figures/side_by_side_europe.png
 
 What's Next?
 ###############
