@@ -6,15 +6,37 @@ LAB: F5 Essential App Protect - Multi-Region with CloudFront (ISC)
 Background & Scenario
 #####################
 
+Your "Organization"
+*******************
+
 You oversee application delpoyment within your organization. One of these apps is BuyTime Auction: a modern microservices-based written in React.JS and running on NGINX. It was built by an outsourced team in record speed, which raised some questions on whether "proper" security testing has been done. You don't have time, resources, or in-house expertise to put the app through rigorous test.
 
-Your team piloted F5 Essential App Protect and believes it provides the checkbox-simple security that you need. First, you like the built-in protection across a number of vectors, which is a useful "isurance policy" for unknowns that potentially exist any time you leverage many frameworks in the modern app dev approach.
+Your team is piloting F5 Essential App Protect and is confident it can provide the checkbox-simple security for your org. For example, you like the built-in protection across a number of vectors, which is a useful "isurance policy" for the unknowns that potentially exist any time you leverage many frameworks in the modern app dev approach.
 
-However, where you really think F5 Essential App Protect is going to be a game-changer for this project, is in the following 2 features: 
-- the fact it can enable multi-region protection for this Auction app, since it has multiple endpoints around the world to serve its global audience, and
-- caching capability offered by intergrated AWS CloudFront feature of this innovative cloud-based WAF.
+However, you think Essential App Protect is a game-changer for the BuyTime project because of the following 2 capabilities:
 
-You are now tasked with enabling both of these capabilities. You're excited and ready to go!
+- caching capability offered by intergrated AWS CloudFront feature of this innovative cloud-based WAF (and you're serving a global audience!)
+- easily adding additional app instances without any need to re-configure multi-region protection!
+
+Your "Mission"
+*******************
+
+Your team has already done a bunch of work ahead of time:
+
+- deployed an instance of F5 Essential App Protect to protect the dev/test BuyTime Auction app instance;
+- configured the CNAME update for the dev/test app;
+- set the protection for the app to be configured in *Monitoring mode during dev/test*, 
+- sent you an invite to the ORG (ISC-LAB-$$$, where $$$ is your unique ID... more on that below).
+
+Unforuntatley, the protected app as well as the instance of Essential App Protect service just happen to be both be deployed in a region far... far... away... from you. But no worries, you decided to take of advantage of this situation to run through a series of tests (i.e. the Lab).
+
+1) Give the protected app instance a quick test with a SQL injection statement. Change from Monitoring to Blocking mode and try again to compare results.
+2) Do a baseline test of latency for the unprotected app instance (directly hitting the server IP from your browser)
+3) Purge cache for the protected instance, and then test latency of the protected instance + compare those results to the latency of the unprotected instance
+4) Add another app instance into the configuration of Essential App Protect + test to see if the app is now served from that new app instance
+5) Compare latency for the final configuration to see how all of the different configuration options fare against one another.
+
+You're all excited and ready to go... Let's do this!!
 
 Pre-Requisites
 ###############
