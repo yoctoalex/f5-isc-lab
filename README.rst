@@ -101,6 +101,8 @@ TODO: Add description
 
 .. figure:: _figures/side_by_side_america.png
 
+.. figure:: _figures/first_instance_ip.png
+
 For now, our app only has one endpoint located in US East (N. Virginia) and deployed on Amazon AWS. Your regions can be different. But our application is serving a global audience, so let's add the second endpoint located in Europe for European users. *NOTE: Your regions may be different, this is just an example*
 
 `a)` Go to the F5 Cloud Services Portal, the **PROTECT APPLICATION** card. There, in the **Description** field of the **General** tab, you can find the information required for the second region.
