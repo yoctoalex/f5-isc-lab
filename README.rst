@@ -170,9 +170,9 @@ While our second region endpoint is deployed let's have a quick look at the foll
 
 - **EdgeTiers**: geographies that we chose to support for caching of our application. Because we're serving a global audience, we picked EdgeTier 3.
 - **Forward Request Headers**: this is where we select which Headers and Cookies to enable for forwarding, as well as enabling compression.
-- **Invalidation Purge**: Finally, a useful feature which deletes content from cache across all EdgeTier locations based on the path(s) specified. Example: */**  We will do a quick cache purge shortly, not now, because, why not?!
+- **Invalidation Purge**: Finally, a useful feature which deletes content from cache across all EdgeTier locations based on the path(s) specified. Example: */images/**  We will do a quick cache purge shortly, not now, because, why not?!
 
-.. figure:: _figures/purge_cache.png
+.. figure:: _figures/purge_cache_demo.png
 
 `b)` Now, next to the status: "Deployed" on the left-hand-side let's select the link to "View Metrics". This can also be accessed from  "Monitor Application" - on the left side of the pretty map, under "View app data insights". This reporting is a new feature specific to AWS CloudFront: "Caching Metrics".
 
