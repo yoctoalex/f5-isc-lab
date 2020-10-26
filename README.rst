@@ -78,7 +78,7 @@ Let's now follow the steps below to send a SQL Injection attack via browser to o
 
 Paste the FQDN into your browser (http://yourdqn). The BuyTime auction site should load, served up by the NGINX app instance that you are currently protecting. You can explore around a bit here.
 
-Next, in the **LOG IN** window let's attempt a SQL Injection attack by filling in username value as follows (including single quotes) **' OR 1=1 --'** and use any password as the value. *NOTE the space after --, it's needed for the attack*. Click **LOGIN**.
+Next, in the **LOG IN** window let's attempt a SQL Injection attack by filling in username value as follows (including single quotes) **' OR 1=1 --'** and use any password as the value. *NOTE the quotes are required for the attack*. Click **LOGIN**.
 
 .. figure:: _figures/sql_attack_not_blocked.png
 
