@@ -75,7 +75,7 @@ Alright. Now you want to "kick the tires" on the app, to see just how poorly it 
 
 Let's now follow the steps below to send a SQL Injection attack via browser to our "BuyTime Auction" app. 
 
-`a)` Copy your FQDN from the F5 Cloud Services Portal. You can get to your app protection settings by clicking "Protect Application" menu in the top middle of the EAP dashboard; the FQDN is located under "General Tab" => "Application Details". You will be using this FQDN for the next task as well, so take note of it and also the IP address of the server where your app is deployed. Also take note of the AWS Region for your deployed app -- it should be far from you geographically, and this will become important in Step 2. But before we that, let's get attackin'!
+`a)` Copy your FQDN from the F5 Cloud Services Portal. You can get to your app protection settings by clicking "Protect Application" menu in the top middle of the EAP dashboard; the FQDN is located under "General Tab" => "Application Details". You will be using this FQDN for the next task as well, so take note of it and also the IP address of the server where your app is deployed. Also take note of the AWS Region for your deployed app -- it should be far from you geographically, and this will become important in Step 2. But before we do that, let's get attackin'!
 
 Paste the FQDN into your browser (https://yourFQDN); note that if you use http:// in the URL, then the EAP configuration will use the HTTP listener redirect to HTTPS protocol. The BuyTime auction site should load, served up by the NGINX app instance that you are currently protecting. You can explore around a bit here.
 
@@ -122,7 +122,7 @@ When you hit Enter, wait for the site to load and then take note of the **total 
 
 .. figure:: _figures/side_by_side_america.png
 
-`c)` At ths same time, the site with the FQDN URL would is going through AWS CloudFront, which means the cached content such as images and static elements are being served from a regional Edge CDN Point of Presence (PoP) closer to you. This means that most likely the site requested through the FQDN in your browser window is loading faster, on average as much as 6x - 10x faster, than the one you're calling directly by the application IP. 
+`c)` At the same time, the site with the FQDN URL is going through AWS CloudFront, which means the cached content such as images and static elements are being served from a regional Edge CDN Point of Presence (PoP) closer to you. This means that most likely the site requested through the FQDN in your browser window is loading faster, on average as much as 6x - 10x faster, than the one you're calling directly by the application IP. 
 
 This is the key value of the Essential App Protect integration with AWS CloudFront: the ability to deliver content to a global user base of protected applications with very little configuration, done right inside the EAP portal. Score!
 
@@ -165,7 +165,7 @@ It will take several minutes to complete, and during this time we will do a quic
 
 .. figure:: _figures/add_region_deploying.png
 
-5. A Quick Run-through a Few of the New Features in Essential App Protect (while we wait)
+5. Running through a Few of the New Features in Essential App Protect (while we wait)
 *****************************************************************************************
 
 While our second region endpoint is deployed let's have a quick look at the following features: 
@@ -184,13 +184,17 @@ While our second region endpoint is deployed let's have a quick look at the foll
 
 .. figure:: _figures/caching_metrics.png
 
-As the traffic for our app traverses the data path as configured, we get some really useful stats, which are updated on a regular basis. Also, besides caching metrics we can look at some awesome "Protection Stats" in the other reporting tab, including top attack types, severities, signatures, and URIs impacted (slice this data by different time, for fun).
+As the traffic for our app traverses the data path as configured, we get some really useful stats, which are updated on a regular basis. 
 
-`c)` Next, in the "General" => "Listener Settings" section, click "Manage Lister Details". Notice the TLS version 1.2, which is a relatively new addition to EAP. Yay!
+`c)` Also, besides caching metrics we can look at some awesome "Protection Stats" in the other reporting tab, including top attack types, severities, signatures, and URIs impacted (slice this data by different time, for fun).
+
+.. figure:: _figures/protection-stats.png
+
+`d)` Next, in the "General" => "Listener Settings" section, click "Manage Lister Details". Notice the TLS version 1.2, which is a relatively new addition to EAP. Yay!
 
 .. figure:: _figures/tls.png
 
-`d)` Lastly, under "View Events" - check out all of the "Service-specific" events that are helpful to keep track of what's happening with our service. 
+`e)` Lastly, under "View Events" - check out all of the "Service-specific" events that are helpful to keep track of what's happening with our service. 
 
 .. figure:: _figures/tracking_history.png
 
@@ -253,8 +257,8 @@ What's Next?
 
 Thanks for hanging in there with us in this lab. If you've gotten this far, you've just done some great work with CloudFront from F5 Essential App Protect. Have you looked at any of the othe labs available, or looked at the F5 Essential App Protect Ansible project that automates many of its routine tasks?  Here are some links for you to look at:
 
-* EAP Lab
-* EAP / DNS Lab
-* Ansible repository
+* EAP Lab (with UI & Postman): https://github.com/f5devcentral/f5-cloudserviceeaplab
+* EAP with DNSLB Lab (UI only): https://github.com/f5devcentral/f5-cloudservice-eap-lb-lab/
+* Ansible repository: https://github.com/f5devcentral/f5-ansible-cloudservices
 
 Thanks for taking the time to do this lab, let us know any issues in the Issues section of this repo!
