@@ -170,9 +170,9 @@ While our second region endpoint is deployed let's have a quick look at the foll
 
 - **EdgeTiers**: geographies that we chose to support for caching of our application. Because we're serving a global audience, we picked EdgeTier 3.
 - **Forward Request Headers**: this is where we select which Headers and Cookies to enable for forwarding, as well as enabling compression.
-- **Invalidation Purge**: Finally, a useful feature which deletes content from cache across all EdgeTier locations based on the path(s) specified. Example: */images/**  We will do a quick cache purge shortly, not now, because, why not?!
+- **Invalidation Purge**: Finally, a useful feature which deletes content from cache across all EdgeTier locations based on the path(s) specified. Example: */**  We will do a quick cache purge shortly, not now, because, why not?!
 
-**TO DO: ADD SCREENSHOT**
+.. figure:: _figures/purge_cache.png
 
 `b)` Now, next to the status: "Deployed" on the left-hand-side let's select the link to "View Metrics". This can also be accessed from  "Monitor Application" - on the left side of the pretty map, under "View app data insights". This reporting is a new feature specific to AWS CloudFront: "Caching Metrics".
 
@@ -201,9 +201,9 @@ OK, by now that second EAP region should be deployed and configured, and you sho
 
 `a)` Now let's run invalidate some content by running invalidation (purge). You should recall from the last step where this option is located, and what we will do next will all items from the cache in our EdgeTier selections. This is useful for when our site or app has changed (such as a new / updated app build or content like an image). 
 
-Click "Create" for a new Invalidation, then in the path add '/' to indicate that all content will be purged <--- **TBD if correct** and click "Save". This will invalidate the cache. 
+Click "Create" for a new Invalidation, then in the path add '/*' to indicate that all content will be purged and click "Save". This will invalidate the cache. 
 
-**TO DO: ADD SCREENSHOT** 
+.. figure:: _figures/purge_cache.png
 
 `b)`
 
