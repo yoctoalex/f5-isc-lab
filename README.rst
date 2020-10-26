@@ -110,11 +110,9 @@ Note that if, instead of the FQDN, you used the IP address of the server, then y
 
 In Chrome hit F12 to open "Developer Tools", or by going to "View" => "Developer" => "Developer Tools". Select "Network" tab. In alternative browsers find the equivalent of the Network tab. Make sure "Preserve Log" is unchecked and "Disable Cache" is checked as in the image below.
 
-.. figure:: _figures/dev-tools-network.png
+.. figure:: _figures/dev-tools-net-dock.png
 
-We recommend that you also Dock the developer tools to the Bottom of your browser, because you will be opening another window side by side in order to run a comparison of latency of both of your sites. 
-
-.. figure:: _figures/dev-tools-dock-bottom.png
+As shown above, we recommend that you also Dock the developer tools to the Bottom of your browser, because you will be opening another window side by side in order to run a comparison of latency of both of your sites. 
 
 `b)` Make sure you have two side-by-side browser windows with Developer Tools "Network" tab selected in each. In *Window A* enter the **IP address** of your first deployed instance. In *Window B* eneter the **FQDN of the app**; note that both of these data points are from the step 2a above. 
 
