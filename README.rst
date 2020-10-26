@@ -11,11 +11,11 @@ Your "Organization"
 
 You oversee application deployment within your organization. One of these apps is BuyTime Auction: a modern microservices-based written in React.JS and running on NGINX. It was built by an outsourced team in record speed, which raised some questions on whether "proper" security testing has been done. You don't have time, resources, or in-house expertise to put the app through rigorous test.
 
-Your team is piloting F5 Essential App Protect and is confident it can provide the checkbox-simple security for your org. For example, you like the built-in protection across a number of vectors, which is a useful "isurance policy" for the unknowns that potentially exist any time you leverage many frameworks in the modern app dev approach.
+Your team is piloting F5 Essential App Protect and is confident it can provide the checkbox-simple security for your org. For example, you like the built-in protection across a number of vectors, which is a useful "insurance policy" for the unknowns that potentially exist any time you leverage many frameworks in the modern app dev approach.
 
 However, you think Essential App Protect is a game-changer for the BuyTime project because of the following 2 capabilities:
 
-- caching capability offered by intergrated AWS CloudFront feature of this innovative cloud-based WAF (and you're serving a global audience!)
+- caching capability offered by integrated AWS CloudFront feature of this innovative cloud-based WAF (and you're serving a global audience!)
 - easily adding additional app instances without any need to re-configure multi-region protection!
 
 Your "Mission"
@@ -133,7 +133,7 @@ Back in the F5 Essential App Protect portal, take note of the "Deployed Region" 
 
 .. figure:: _figures/first_instance_ip.png
 
-Notice that in the example here our app only has only one endpoint with the EAP instance deployed to US East N. Virginia (of course your regions will probably be different). But.... theBuyTime auction is intended to serve a global audience, so here are some of the considerations for our scenarios:
+Notice that in the example here our app only has only one endpoint with the EAP instance deployed to US East N. Virginia (of course your regions will probably be different). But.... the BuyTime auction is intended to serve a global audience, so here are some things to consider:
 
 * AWS CloudFront is effectively distributing **some** content of our site to our target audiences -- it's mostly the **static** stuff like images. 
 * However, if you have just one app instance, this means that for some customers all of the **dynamic** interactions with the database calls, for eample, are still hapenning on that on that app instance far... far.. away, which is not ideal.
