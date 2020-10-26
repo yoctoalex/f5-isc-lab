@@ -1,5 +1,5 @@
-LAB: F5 Essential App Protect - Multi-Region with CloudFront (ISC)
-==================================================================
+LAB: F5 Essential App Protect with CloudFront & Multi-Region App (ISC)
+======================================================================
 
 .. contents:: Table of Contents
 
@@ -74,7 +74,9 @@ Alright. Now you want to "kick the tires" on the app, to see just how poorly it 
 
 Let's now follow the steps below to send a SQL Injection attack via browser to our "BuyTime Auction" app. 
 
-`a)` Copy your FQDN from the F5 Cloud Services Portal and paste it to your browser. In the **LOG IN** window fill in username value as follows (including single quotes) **' OR 1=1 --'** and use any password as the value. *NOTE the space after --, it's needed for the attack*. Click **LOGIN**.
+`a)` Copy your FQDN from the F5 Cloud Services Portal. You can get to your app protection settings by clicking "Protect Application" menu in the top middle of the EAP dashboard; the FQDN is located under "General Tab" => "Application Details". You will be using this FQDN for the next task as well, so take note of it and also the IP address of the server where your app is deployed. Paste the FQDN into your browser (http://yourdqn). The BuyTime auction site should load, served up by the NGINX app instance that you are currently protecting. You can explore around a bit here.
+
+Next, in the **LOG IN** window let's attempt a SQL Injection attack by filling in username value as follows (including single quotes) **' OR 1=1 --'** and use any password as the value. *NOTE the space after --, it's needed for the attack*. Click **LOGIN**.
 
 .. figure:: _figures/sql_attack_not_blocked.png
 
@@ -94,7 +96,15 @@ You can find detailed event log in the events stream in the F5 Cloud Services Po
 
 .. figure:: _figures/sql_attack_events_stream.png
 
-3. Add an Additional Region Endpoint
+Note that if instead of the FQDN you used the IP address of the server, your browser requests would bypass EAP, which is why it's so important for EAP customers to block access for IPs other than those used by the EAP service in the region(s) deployed. You can find out more about the allow list for EAP here:  https://clouddocs.f5.com/cloud-services/latest/f5-cloud-services-Essential.App.Protect-WorkWith.html#add-deployment-regions-to-allow-list
+
+3. Baseline test of latency against the app server (using direct IP)
+************************************************************************
+
+As you 
+
+
+5. Add an Additional Region Endpoint
 ************************************************************************
 
 TODO: Add description
