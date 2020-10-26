@@ -103,7 +103,7 @@ Note that if, instead of the FQDN, you used the IP address of the server, then y
 3. Baseline Test of Latency Against the App Server (using direct IP)
 ************************************************************************
 
-The next couple of tests will compare latency without and with Essential App Protect + CloudFront. In your browser window ( Chrome recommended), open "Developer Tools" by going to "View" => "Developer" => "Developer Tools". Select "Network" tab. In alternative browsers find the equivalent of the Network tab. Make sure "Preserve Log" is unchecked and "Disable Cache" is checked as in the image below.
+`a)` The next couple of tests will compare latency without and with Essential App Protect + CloudFront. In your browser window ( Chrome recommended), open "Developer Tools" by going to "View" => "Developer" => "Developer Tools". Select "Network" tab. In alternative browsers find the equivalent of the Network tab. Make sure "Preserve Log" is unchecked and "Disable Cache" is checked as in the image below.
 
 .. figure:: _figures/dev-tools-network.png
 
@@ -112,13 +112,13 @@ side by side in order to run a comparison of latency of both of your sites.
 
 .. figure:: _figures/dev-tools-dock-bottom.png
 
-So, at this point open another window and make sure the Network tab is also selected there. Now that you have both browsers open, enter the IP address of your first deployed instance into one window, and the FQDN of the site into the other; both of these data points should have been noted in the step 2a above. 
+`b)` So, at this point open another window and make sure the Network tab is also selected there. Now that you have both browsers open, enter the IP address of your first deployed instance into one window, and the FQDN of the site into the other; both of these data points should have been noted in the step 2a above. 
 
 When you hit Enter, wait for the site to load and then take note of the total time it took to load each site. You'll be looking for the value in "Finish: [ ] ms/s". Now, recall that your initial app instance is deployed on an AWS Region far from you geographically. This means that more than likely your Direct IP test should yield a relatively high latency result (of course, this depends on your internet connectivity as well, but we expect it to be at least 7-10 seconds).  
 
 .. figure:: _figures/side_by_side_america.png
 
-At ths same time, the site with the FQDN URL would is going through AWS CloudFront, which means the cached content such as images and static elements are being served from a regional Edge CDN Point of Presence (PoP) closer to you. This means that most likely the site requested through the FQDN in your browser window is loading faster, on average as much as 6x - 10x faster, than the one you're calling directly by the application IP. 
+`c)` At ths same time, the site with the FQDN URL would is going through AWS CloudFront, which means the cached content such as images and static elements are being served from a regional Edge CDN Point of Presence (PoP) closer to you. This means that most likely the site requested through the FQDN in your browser window is loading faster, on average as much as 6x - 10x faster, than the one you're calling directly by the application IP. 
 
 This is the key value of the Essential App Protect integration with AWS CloudFront: the ability to deliver content to a global user base of protected applications with very little configuration, done right inside the EAP portal. Score!
 
@@ -164,34 +164,84 @@ It will take several minutes to complete, and during this time we will do a quic
 5. A Quick Run-through a Few of the New Features in Essential App Protect (while we wait)
 *****************************************************************************************
 
+While our second region endpoint is deployed let's have a quick look at the following features: 
+
+`a)` Under "General" => "Caching", click **Manage Caching**. Let's have a look at all of the conifguration options that have been configured initially for our application. Note the following:
+
+- **EdgeTiers**: geographies that we chose to support for caching of our application. Because we're serving a global audience, we picked EdgeTier 3.
+- **Forward Request Headers**: this is where we select which Headers and Cookies to enable for forwarding, as well as enabling compression.
+- **Invalidation Purge**: Finally, a useful feature which deletes content from cache across all EdgeTier locations based on the path(s) specified. Example: */images/**  We will do a quick cache purge shortly, not now, because, why not?!
+
+**TO DO: ADD SCREENSHOT**
+
+`b)` Now, next to the status: "Deployed" on the left-hand-side let's select the link to "View Metrics". This can also be accessed from  "Monitor Application" - on the left side of the pretty map, under "View app data insights". This reporting is a new feature specific to AWS CloudFront: "Caching Metrics".
+
+**TO DO: ADD SCREENSHOT**
 
 
+As the traffic for our app traverses the data path as configured, we get some really useful stats, which are updated on a regular basis. Also, besides caching metrics we can look at some awesome "Protection Stats" in the other reporting tab, including top attack types, severities, signatures, and URIs impacted (slice this data by different time, for fun).
 
-4. Latency Tests of the 2nd Region with CloudFront 
+`c)` Next, in the "General" => "Listener Settings" section, click "Manage Lister Details". Notice the TLS version 1.2, which is a relatively new addition to EAP. Yay!
+
+**TO DO: ADD SCREENSHOT**
+
+`d)` Lastly, under "View Events" - check out all of the "Service-specific" events that are helpful to keep track of what's happening with our service. 
+
+**TO DO: ADD SCREENSHOT**
+
+Alright, at this point have a quick break, get a coffee, stretch, or send your F5 colleague a quick message on how awesome this Lab has been so far (we just want to gave our new region sufficient chance to deploy). That said, let's move on the next and final segment of our journey. 
+
+
+6. Cache Purge & Latency Tests of the 2nd Region with CloudFront 
 ************************************************************************
 
 OK, by now that second EAP region should be deployed and configured, and you should see the **Active** state indicator. If not, refresh just to be sure -- and note that in some regions things may just take a bit longer. For example, in our Lab tests us-west-2 (Oregon) took on average 20-25 mins to deploy the second region; by comparison eu-west-3 (Paris) was much faster. 
 
 .. figure:: _figures/add_region_active.png
 
-Now open the BuyTime app (using the app FQDN) in the browser and, hopefullly, you will see that the app instance has changed to the one much closer to you geographically. If it didn't, there are some possible things that may have happened. 
+`a)` Now let's run invalidate some content by running invalidation (purge). You should recall from the last step where this option is located, and what we will do next will all items from the cache in our EdgeTier selections. This is useful for when our site or app has changed (such as a new / updated app build or content like an image). 
+
+Click "Create" for a new Invalidation, then in the path add '/' to indicate that all content will be purged <--- **TBD if correct** and click "Save". This will invalidate the cache. 
+
+**TO DO: ADD SCREENSHOT** 
+
+`b)`
+
+Now let's do one final test of the BuyTime app (using the app FQDN) in the browser. At this point, hopefully, you will see that the app instance has changed to the one much closer to you geographically. 
 
 .. figure:: _figures/region_europe.png
+
+If it didn't, there are some possible things that may have happened to our second (new) app instance:
+- it may not have been available/busy, or
+- it may have actually been higher latency than the other region.
+
+If the closer app instance/region did load, then YAY!, this lab has not a total waste at this point, right?! Let's just do another quick test for latency just to see whether everything is loading even faster now that a closer app instance is being loaded. 
+
+`c)`
+
 Lets open the Developer tools by pressing Ctrl+Shift+I or From "Browser settings" => "More tools" => "Developer tools". Open the Network tab and disable caching and preserve logs.
 
 .. figure:: _figures/dev_tools.png
 
-Now we need to open two browser windows. At the first one we open the website using a domain name and at the second one we use the IP address from the description field in step 3.a. Try to press page refresh couple times and check the page load time. In the first window with domain name it's faster because the traffic flows through the CloudFront CDN.
+If you feel adventurous, open two browser windows. We will try to load both: 
+- the app using the FQDN domain name, and 
+- the app using the IP address of the 2nd app instance (the one from the Dscription field in step 4.a. 
 
 .. figure:: _figures/side_by_side_europe.png
+
+Try to press page refresh couple times and check the page load time. In the first window with domain name it should be faster (in theory) because the traffic flows through the CloudFront CDN. That said, it's possible the results are really close, or perhaps not what you'd expect. Can you take a guess why? Perhaps AWS-hosted app instance is just loading faster than CDN, perhaps because the PoP is a tad bit slower, or further away from you geographically. Have 
+
+This is a good opportunity to play detective and run some tests, including re-running tests from Step 3b above (the original instance IP vs FQDN). How do those two compare? What is different?
+
+Alright, at this point you've done some pretty incredible work, ran some tests, added another region in EAP, did some cache purging, and ran more tests. Hopefully you had fun?! Either way we'd love to hear about your results and how you liked this lab, as well as any issues or questions you may have. 
 
 What's Next?
 ###############
 
-Good job! If you've gotten this far, you've successfully added another regional endpoint and turned on CloudFront from F5 Essential App Protect. Have you looked at any of the othe labs available, or looked at the F5 Essential App ProtectAnsible project that automates many of its routine tasks?  Here are some things for you to look at:
+Thanks for hanging in there with us in this lab. If you've gotten this far, you've just done some great work with CloudFront from F5 Essential App Protect. Have you looked at any of the othe labs available, or looked at the F5 Essential App Protect Ansible project that automates many of its routine tasks?  Here are some links for you to look at:
 
 * EAP Lab
 * EAP / DNS Lab
 * Ansible repository
 
-Thanks for taking the time to do this lab, let us know any issues in the Issues section of this repo. 
+Thanks for taking the time to do this lab, let us know any issues in the Issues section of this repo!
