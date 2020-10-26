@@ -133,11 +133,14 @@ Back in the F5 Essential App Protect portal, take note of the "Deployed Region" 
 
 .. figure:: _figures/first_instance_ip.png
 
-Notice in the example here, our app only has only one endpoint with the EAP instance deployed to in US East N. Virginia (of course your regions will probably be different). BuyTime auction is intended to serve a global audience, and while AWS CloudFront is effectively distributing **some** content of our site to our target audiences -- it's mostly the **static** stuff like images. It would be a **really** good idea to have another app instance or more for each of the target regions where we'd like to have presence. 
+Notice that in the example here our app only has only one endpoint with the EAP instance deployed to US East N. Virginia (of course your regions will probably be different). But.... theBuyTime auction is intended to serve a global audience, so here are some of the considerations for our scenarios:
 
-Imagine, if we know we have customers in Europe and Asia, but only one app instance in North America.... that would mean all of the **dynamic** interactions with the database, for eample, is still hapenning on that one app instance far... far.. away, and your customers' experience would be subpar! 
+* AWS CloudFront is effectively distributing **some** content of our site to our target audiences -- it's mostly the **static** stuff like images. 
+* However, if you have just one app instance, this means that for some customers all of the **dynamic** interactions with the database calls, for eample, are still hapenning on that on that app instance far... far.. away, which is not ideal.
+* Therefore, it would be a **really** good idea to have another app instance or more for each of the target regions where you'd like to have presence. 
+* Typically setting up additional instances requires heavy configuration and effort to configure protection and apply policies consistently across endpoints.
 
-No worries, F5 Essential App Protect makes it super easy to add a second endpoint, and to have EAP automatically apply all of the config such as protection policy and AWS CloudFront configuration. You will now go ahead and add another app endpoint, which should be much closer geographically to where you are located (it's a neat thing we built into this lab). So let's do this!
+With F5 Essential App Protect it is super easy to add a second endpoint, and to have EAP automatically apply all of the config such as protection policy and AWS CloudFront configuration. You will now go ahead and add another app endpoint, which should be much closer geographically to where you are located (it's a neat thing we built into this lab). So let's do this!
 
 `a)` Go to the F5 Cloud Services Portal, the **PROTECT APPLICATION** card. There, under the **General** tab and in the **Description** field you will can find information for the second app instance IP address and the **required AWS region** of where you should deploy your second Essential App Protect region. *Please take note of this IP address and the Region, as you will need this information next.*
 
