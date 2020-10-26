@@ -9,7 +9,7 @@ Background & Scenario
 Your "Organization"
 *******************
 
-You oversee application delpoyment within your organization. One of these apps is BuyTime Auction: a modern microservices-based written in React.JS and running on NGINX. It was built by an outsourced team in record speed, which raised some questions on whether "proper" security testing has been done. You don't have time, resources, or in-house expertise to put the app through rigorous test.
+You oversee application deployment within your organization. One of these apps is BuyTime Auction: a modern microservices-based written in React.JS and running on NGINX. It was built by an outsourced team in record speed, which raised some questions on whether "proper" security testing has been done. You don't have time, resources, or in-house expertise to put the app through rigorous test.
 
 Your team is piloting F5 Essential App Protect and is confident it can provide the checkbox-simple security for your org. For example, you like the built-in protection across a number of vectors, which is a useful "isurance policy" for the unknowns that potentially exist any time you leverage many frameworks in the modern app dev approach.
 
@@ -28,7 +28,7 @@ Your team has already done a bunch of work ahead of time:
 - set the protection for the app to be configured in *Monitoring mode during dev/test*, 
 - sent you an invite to the ORG (ISC-LAB-$$$, where $$$ is your unique ID... more on that below).
 
-Unforuntatley, the protected app as well as the instance of Essential App Protect service just happen to be both be deployed in a region far... far... away... from you. But no worries, you decided to take of advantage of this situation to run through a series of tests (i.e. the Lab).
+Unfortunately, the protected app as well as the instance of Essential App Protect service just happen to be both be deployed in a region far... far... away... from you. But no worries, you decided to take of advantage of this situation to run through a series of tests (i.e. the Lab).
 
 1) Give the protected app instance a quick test with a SQL injection statement. Change from Monitoring to Blocking mode and try again to compare results.
 2) Do a baseline test of latency for the unprotected app instance (directly hitting the server IP from your browser)
@@ -77,7 +77,7 @@ Let's now follow the steps below to send a SQL Injection attack via browser to o
 
 `a)` Copy your FQDN from the F5 Cloud Services Portal. You can get to your app protection settings by clicking "Protect Application" menu in the top middle of the EAP dashboard; the FQDN is located under "General Tab" => "Application Details". You will be using this FQDN for the next task as well, so take note of it and also the IP address of the server where your app is deployed. Also take note of the AWS Region for your deployed app -- it should be far from you geographically, and this will become important in Step 2. But before we that, let's get attackin'!
 
-Paste the FQDN into your browser (http://yourdqn). The BuyTime auction site should load, served up by the NGINX app instance that you are currently protecting. You can explore around a bit here.
+Paste the FQDN into your browser (https://yourFQDN); note that if you use http:// in the URL, then the EAP configuration will use the HTTP listener redirect to HTTPS protocol. The BuyTime auction site should load, served up by the NGINX app instance that you are currently protecting. You can explore around a bit here.
 
 Next, in the **LOG IN** window let's attempt a SQL Injection attack by filling in username value as follows (including single quotes) **' OR 1=1 -- '** and use any password as the value.  *NOTE the quotes are required for the attack, as is the space after the --*. Click **LOGIN**.
 
@@ -194,12 +194,14 @@ As the traffic for our app traverses the data path as configured, we get some re
 
 .. figure:: _figures/tracking_history.png
 
-The details provide the following information (more details can be found in `this AWS CloudFront article <https://aws.amazon.com/about-aws/whats-new/2014/10/09/amazon-cloudfront-publishes-six-operational-metrics-to-amazon-cloudwatch/>_`): 
-- *REQUESTS(SUM)*: The total number of viewer requests received by CloudFront, for all HTTP methods and for both HTTP and HTTPS requests.
-- *DATA TRANSFER*:
+The details provide the following information (more details can be found in 
+`this AWS CloudFront article <https://aws.amazon.com/about-aws/whats-new/2014/10/09/amazon-cloudfront-publishes-six-operational-metrics-to-amazon-cloudwatch/>`_):
+
++ *REQUESTS(SUM)*: The total number of viewer requests received by CloudFront, for all HTTP methods and for both HTTP and HTTPS requests.
++ *DATA TRANSFER*:
   (a) Bytes Downloaded - The total number of bytes downloaded by viewers for GET, HEAD, and OPTIONS requests.
   (b) Bytes Uploaded - The total number of bytes that viewers uploaded to your origin with CloudFront, using POST and PUT requests.
-- *TOTAL ERROR RATE*: The percentage of all viewer requests for which the response’s HTTP status code is 4xx or 5xx.
++ *TOTAL ERROR RATE*: The percentage of all viewer requests for which the response’s HTTP status code is 4xx or 5xx.
 
 Alright, at this point have a quick break, get a coffee, stretch, or send your F5 colleague a quick message on how awesome this Lab has been so far (we just want to gave our new region sufficient chance to deploy). That said, let's move on the next and final segment of our journey. 
 
