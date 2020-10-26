@@ -176,18 +176,20 @@ While our second region endpoint is deployed let's have a quick look at the foll
 
 `b)` Now, next to the status: "Deployed" on the left-hand-side let's select the link to "View Metrics". This can also be accessed from  "Monitor Application" - on the left side of the pretty map, under "View app data insights". This reporting is a new feature specific to AWS CloudFront: "Caching Metrics".
 
-**TO DO: ADD SCREENSHOT**
+.. figure:: _figures/caching_metrics.png
 
 
 As the traffic for our app traverses the data path as configured, we get some really useful stats, which are updated on a regular basis. Also, besides caching metrics we can look at some awesome "Protection Stats" in the other reporting tab, including top attack types, severities, signatures, and URIs impacted (slice this data by different time, for fun).
 
 `c)` Next, in the "General" => "Listener Settings" section, click "Manage Lister Details". Notice the TLS version 1.2, which is a relatively new addition to EAP. Yay!
 
-**TO DO: ADD SCREENSHOT**
+.. figure:: _figures/tls.png
+
 
 `d)` Lastly, under "View Events" - check out all of the "Service-specific" events that are helpful to keep track of what's happening with our service. 
 
-**TO DO: ADD SCREENSHOT**
+.. figure:: _figures/tracking_history.png
+
 
 Alright, at this point have a quick break, get a coffee, stretch, or send your F5 colleague a quick message on how awesome this Lab has been so far (we just want to gave our new region sufficient chance to deploy). That said, let's move on the next and final segment of our journey. 
 
