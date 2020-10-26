@@ -42,6 +42,7 @@ Pre-Requisites
 ###############
 
 - Main browser: any modern browser (Chrome recommended) for working with the UI (and this lab)
+- Disconnect any VPN clients, such as F5 Edge Client, etc: your IP address needs to be in your home office region/geography
 
 In order to use F5 Essential App Protect you need access to F5 Cloud Services and be logged in with a valid user account. If you need to sign up, or if you already have one, use your Main browser to log into the `F5 Cloud Services portal <http://bit.ly/f5csreg>`_.
 
@@ -78,11 +79,13 @@ Let's now follow the steps below to send a SQL Injection attack via browser to o
 
 Paste the FQDN into your browser (http://yourdqn). The BuyTime auction site should load, served up by the NGINX app instance that you are currently protecting. You can explore around a bit here.
 
-Next, in the **LOG IN** window let's attempt a SQL Injection attack by filling in username value as follows (including single quotes) **' OR 1=1 --'** and use any password as the value. *NOTE the quotes are required for the attack*. Click **LOGIN**.
+Next, in the **LOG IN** window let's attempt a SQL Injection attack by filling in username value as follows (including single quotes) **' OR 1=1 -- '** and use any password as the value.  *NOTE the quotes are required for the attack, as is the space after the --*. Click **LOGIN**.
 
 .. figure:: _figures/sql_attack_not_blocked.png
 
-As you can see this attack bypassed the login and is showing the contents of the catalog that should be restricted only to valid users. Not good! 
+At this point your SQL Injection should have bypassed the login and show the contents of the catalog (see below) that should be restricted only to valid users. Not good!
+
+.. figure:: _figures/success-hack.png
 
 But, no worries! This app has already been configured with F5 Essential App Protect, and you know that all you need to do is to turn on the Blocking mode on. Let's do this now.
 
@@ -103,18 +106,19 @@ Note that if, instead of the FQDN, you used the IP address of the server, then y
 3. Baseline Test of Latency Against the App Server (using direct IP)
 ************************************************************************
 
-`a)` The next couple of tests will compare latency without and with Essential App Protect + CloudFront. In your browser window ( Chrome recommended), open "Developer Tools" by going to "View" => "Developer" => "Developer Tools". Select "Network" tab. In alternative browsers find the equivalent of the Network tab. Make sure "Preserve Log" is unchecked and "Disable Cache" is checked as in the image below.
+`a)` The next couple of tests will compare latency without and with Essential App Protect + CloudFront. The desired end-state layout of your browser windows should be two side-by-side browser sessions with Chrome dev tools enabled.
+
+In Chrome hit F12 to open "Developer Tools", or by going to "View" => "Developer" => "Developer Tools". Select "Network" tab. In alternative browsers find the equivalent of the Network tab. Make sure "Preserve Log" is unchecked and "Disable Cache" is checked as in the image below.
 
 .. figure:: _figures/dev-tools-network.png
 
-We recommend that you also Dock the developer tools to the Bottom of your browser, because you will be opening another window 
-side by side in order to run a comparison of latency of both of your sites. 
+We recommend that you also Dock the developer tools to the Bottom of your browser, because you will be opening another window side by side in order to run a comparison of latency of both of your sites. 
 
 .. figure:: _figures/dev-tools-dock-bottom.png
 
-`b)` So, at this point open another window and make sure the Network tab is also selected there. Now that you have both browsers open, enter the IP address of your first deployed instance into one window, and the FQDN of the site into the other; both of these data points should have been noted in the step 2a above. 
+`b)` Make sure you have two side-by-side browser windows with Developer Tools "Network" tab selected in each. In *Window A* enter the **IP address** of your first deployed instance. In *Window B* eneter the **FQDN of the app**; note that both of these data points are from the step 2a above. 
 
-When you hit Enter, wait for the site to load and then take note of the total time it took to load each site. You'll be looking for the value in "Finish: [ ] ms/s". Now, recall that your initial app instance is deployed on an AWS Region far from you geographically. This means that more than likely your Direct IP test should yield a relatively high latency result (of course, this depends on your internet connectivity as well, but we expect it to be at least 7-10 seconds).  
+When you hit Enter, wait for the site to load and then take note of the **total time** it takes to load each site. You'll be looking for the following value in **Finish: [ ]** ms/s. Now, recall that your initial app instance is deployed on an AWS Region far from you geographically. This means that more than likely your Direct IP test should yield a relatively high latency result (of course, this depends on your internet connectivity as well, but we expect it to be at least 7-10 seconds).  
 
 .. figure:: _figures/side_by_side_america.png
 
@@ -135,9 +139,9 @@ Notice in the example here, our app only has only one endpoint with the EAP inst
 
 Imagine, if we know we have customers in Europe and Asia, but only one app instance in North America.... that would mean all of the **dynamic** interactions with the database, for eample, is still hapenning on that one app instance far... far.. away, and your customers' experience would be subpar! 
 
-No worries, F5 Essential App Protect makes it super easy to add a second endpoint, and to have EAP automatiically apply all of the config such as protection policy and AWS CloudFront configuration. You will now go ahead and add another app endpoint, which should be much closer geographically to where you are located (it's a neat thing we built into this lab). So let's do this!
+No worries, F5 Essential App Protect makes it super easy to add a second endpoint, and to have EAP automatically apply all of the config such as protection policy and AWS CloudFront configuration. You will now go ahead and add another app endpoint, which should be much closer geographically to where you are located (it's a neat thing we built into this lab). So let's do this!
 
-`a)` Go to the F5 Cloud Services Portal, the **PROTECT APPLICATION** card. There, under the **General** tab and in the **Description** field you will can find information for the second app instance IP address and the **required AWS region** of where you should deploy your second Essential App Protect region.
+`a)` Go to the F5 Cloud Services Portal, the **PROTECT APPLICATION** card. There, under the **General** tab and in the **Description** field you will can find information for the second app instance IP address and the **required AWS region** of where you should deploy your second Essential App Protect region. *Please take note of this IP address and the Region, as you will need this information next.*
 
 *NOTE: In our example below the required second endpoint needs to be located in Europe in **eu-west-3**. We ask that you please select the region you were assigned indicated in his description, because selecting a different AWS deployment region **can impact capacity and therefore customer experience**. So let's do the right thing and select the right region, right? Of course, your second app IP and Region are likely to be different, as what you see below is just an example.*
 
@@ -166,18 +170,19 @@ It will take several minutes to complete, and during this time we will do a quic
 
 While our second region endpoint is deployed let's have a quick look at the following features: 
 
-`a)` Under "General" => "Caching", click **Manage Caching**. Let's have a look at all of the conifguration options that have been configured initially for our application. Note the following:
+`a)` Under "General" => "Caching", click **Manage**. Let's have a look at all of the conifguration options that have been configured initially for our application. Note the following:
 
-- **EdgeTiers**: geographies that we chose to support for caching of our application. Because we're serving a global audience, we picked EdgeTier 3.
+- **EdgeTiers**: geographies that we chose to support for caching of our application. Because we're serving a global audience, we picked EdgeTier 3, which has most regional coverage.
+
 - **Forward Request Headers**: this is where we select which Headers and Cookies to enable for forwarding, as well as enabling compression.
-- **Invalidation Purge**: Finally, a useful feature which deletes content from cache across all EdgeTier locations based on the path(s) specified. Example: */images/**  We will do a quick cache purge shortly, not now, because, why not?!
+
+- **Invalidation Purge**: Finally, a feature you might not be able to see in the portal (because your EAP instance and CloudFront config is being updated at this point. However, we will explore Invalidation further below; suffice to say this deletes content from cache across all EdgeTier locations based on the path(s) specified. 
 
 .. figure:: _figures/purge_cache_demo.png
 
-`b)` Now, next to the status: "Deployed" on the left-hand-side let's select the link to "View Metrics". This can also be accessed from  "Monitor Application" - on the left side of the pretty map, under "View app data insights". This reporting is a new feature specific to AWS CloudFront: "Caching Metrics".
+`b)` Now, next to the status: "Deployed" or "Updating" on the left-hand-side let's select the link to "View Metrics". This can also be accessed from  "Monitor Application" - on the left side of the pretty map, under "View app data insights". This reporting is a new feature specific to AWS CloudFront: "Caching Metrics".
 
 .. figure:: _figures/caching_metrics.png
-
 
 As the traffic for our app traverses the data path as configured, we get some really useful stats, which are updated on a regular basis. Also, besides caching metrics we can look at some awesome "Protection Stats" in the other reporting tab, including top attack types, severities, signatures, and URIs impacted (slice this data by different time, for fun).
 
@@ -185,19 +190,23 @@ As the traffic for our app traverses the data path as configured, we get some re
 
 .. figure:: _figures/tls.png
 
-
 `d)` Lastly, under "View Events" - check out all of the "Service-specific" events that are helpful to keep track of what's happening with our service. 
 
 .. figure:: _figures/tracking_history.png
 
+The details provide the following information (more details can be found in `this AWS CloudFront article <https://aws.amazon.com/about-aws/whats-new/2014/10/09/amazon-cloudfront-publishes-six-operational-metrics-to-amazon-cloudwatch/>_`): 
+- *REQUESTS(SUM)*: The total number of viewer requests received by CloudFront, for all HTTP methods and for both HTTP and HTTPS requests.
+- *DATA TRANSFER*:
+  (a) Bytes Downloaded - The total number of bytes downloaded by viewers for GET, HEAD, and OPTIONS requests.
+  (b) Bytes Uploaded - The total number of bytes that viewers uploaded to your origin with CloudFront, using POST and PUT requests.
+- *TOTAL ERROR RATE*: The percentage of all viewer requests for which the response’s HTTP status code is 4xx or 5xx.
 
 Alright, at this point have a quick break, get a coffee, stretch, or send your F5 colleague a quick message on how awesome this Lab has been so far (we just want to gave our new region sufficient chance to deploy). That said, let's move on the next and final segment of our journey. 
-
 
 6. Cache Purge & Latency Tests of the 2nd Region with CloudFront 
 ************************************************************************
 
-OK, by now that second EAP region should be deployed and configured, and you should see the **Active** state indicator. If not, refresh just to be sure -- and note that in some regions things may just take a bit longer. For example, in our Lab tests us-west-2 (Oregon) took on average 20-25 mins to deploy the second region; by comparison eu-west-3 (Paris) was much faster. 
+If by now that second EAP region should be deployed and configured, and you should see the **Active** state indicator. If not, refresh just to be sure -- and note that in some regions things may just take a bit longer. For example, in our Lab tests us-west-2 (Oregon) took on average 20-25 mins to deploy the second region; by comparison eu-west-3 (Paris) was much faster. 
 
 .. figure:: _figures/add_region_active.png
 
