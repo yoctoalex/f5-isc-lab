@@ -74,7 +74,9 @@ Alright. Now you want to "kick the tires" on the app, to see just how poorly it 
 
 Let's now follow the steps below to send a SQL Injection attack via browser to our "BuyTime Auction" app. 
 
-`a)` Copy your FQDN from the F5 Cloud Services Portal. You can get to your app protection settings by clicking "Protect Application" menu in the top middle of the EAP dashboard; the FQDN is located under "General Tab" => "Application Details". You will be using this FQDN for the next task as well, so take note of it and also the IP address of the server where your app is deployed. Paste the FQDN into your browser (http://yourdqn). The BuyTime auction site should load, served up by the NGINX app instance that you are currently protecting. You can explore around a bit here.
+`a)` Copy your FQDN from the F5 Cloud Services Portal. You can get to your app protection settings by clicking "Protect Application" menu in the top middle of the EAP dashboard; the FQDN is located under "General Tab" => "Application Details". You will be using this FQDN for the next task as well, so take note of it and also the IP address of the server where your app is deployed. Also take note of the AWS Region for your deployed app -- it should be far from you geographically, and this will become important in Step 2. But before we that, let's get attackin'!
+
+Paste the FQDN into your browser (http://yourdqn). The BuyTime auction site should load, served up by the NGINX app instance that you are currently protecting. You can explore around a bit here.
 
 Next, in the **LOG IN** window let's attempt a SQL Injection attack by filling in username value as follows (including single quotes) **' OR 1=1 --'** and use any password as the value. *NOTE the space after --, it's needed for the attack*. Click **LOGIN**.
 
@@ -96,26 +98,48 @@ You can find detailed event log in the events stream in the F5 Cloud Services Po
 
 .. figure:: _figures/sql_attack_events_stream.png
 
-Note that if instead of the FQDN you used the IP address of the server, your browser requests would bypass EAP, which is why it's so important for EAP customers to block access for IPs other than those used by the EAP service in the region(s) deployed. You can find out more about the allow list for EAP here:  https://clouddocs.f5.com/cloud-services/latest/f5-cloud-services-Essential.App.Protect-WorkWith.html#add-deployment-regions-to-allow-list
+Note that if, instead of the FQDN, you used the IP address of the server, then your browser requests would bypass EAP. That is why it's so important for EAP customers to block access for IPs other than those used by the EAP service in the region(s) deployed. You can find out more about the allow list for EAP here:  https://clouddocs.f5.com/cloud-services/latest/f5-cloud-services-Essential.App.Protect-WorkWith.html#add-deployment-regions-to-allow-list
 
-3. Baseline test of latency against the app server (using direct IP)
+3. Baseline Test of Latency Against the App Server (using direct IP)
 ************************************************************************
 
-As you 
+The next couple of tests will compare latency without and with Essential App Protect + CloudFront. In your browser window ( Chrome recommended), open "Developer Tools" by going to "View" => "Developer" => "Developer Tools". Select "Network" tab. In alternative browsers find the equivalent of the Network tab. Make sure "Preserve Log" is unchecked and "Disable Cache" is checked as in the image below.
 
+.. figure:: _figures/dev-tools-network.png
 
-5. Add an Additional Region Endpoint
-************************************************************************
+We recommend that you also Dock the developer tools to the Bottom of your browser, because you will be opening another window 
+side by side in order to run a comparison of latency of both of your sites. 
 
-TODO: Add description
+.. figure:: _figures/dev-tools-dock-bottom.png
+
+So, at this point open another window and make sure the Network tab is also selected there. Now that you have both browsers open, enter the IP address of your first deployed instance into one window, and the FQDN of the site into the other; both of these data points should have been noted in the step 2a above. 
+
+When you hit Enter, wait for the site to load and then take note of the total time it took to load each site. You'll be looking for the value in "Finish: [ ] ms/s". Now, recall that your initial app instance is deployed on an AWS Region far from you geographically. This means that more than likely your Direct IP test should yield a relatively high latency result (of course, this depends on your internet connectivity as well, but we expect it to be at least 7-10 seconds).  
 
 .. figure:: _figures/side_by_side_america.png
 
+At ths same time, the site with the FQDN URL would is going through AWS CloudFront, which means the cached content such as images and static elements are being served from a regional Edge CDN Point of Presence (PoP) closer to you. This means that most likely the site requested through the FQDN in your browser window is loading faster, on average as much as 6x - 10x faster, than the one you're calling directly by the application IP. 
+
+This is the key value of the Essential App Protect integration with AWS CloudFront: the ability to deliver content to a global user base of protected applications with very little configuration, done right inside the EAP portal. Score!
+
+4. Adding an Additional Region Endpoint
+************************************************************************
+
+Alright, now that we've done our first baseline test let's go on to explore the second value of running AWS CloudFront with Essential App Protect: the ability to easily add additional application endpoints (app regions) without the need to re-confgure or apply any additional configuration to the new region. Everything is done for you! 
+
+Back in the F5 Essential App Protect portal, take note of the "Deployed Region" in the General Tab of the EAP portal (to get there, you just need to click the "Protect Application" menu of the main dashboard). You should have the initial region for the currently deployed EAP instance indicated, with the IP application of the only app instance that we are protecting. 
+
 .. figure:: _figures/first_instance_ip.png
 
-For now, our app only has one endpoint located in US East (N. Virginia) and deployed on Amazon AWS. Your regions can be different. But our application is serving a global audience, so let's add the second endpoint located in Europe for European users. *NOTE: Your regions may be different, this is just an example*
+Notice in the example here, our app only has only one endpoint with the EAP instance deployed to in US East N. Virginia (of course your regions will probably be different). BuyTime auction is intended to serve a global audience, and while AWS CloudFront is effectively distributing **some** content of our site to our target audiences -- it's mostly the **static** stuff like images. It would be a **really** good idea to have another app instance or more for each of the target regions where we'd like to have presence. 
 
-`a)` Go to the F5 Cloud Services Portal, the **PROTECT APPLICATION** card. There, in the **Description** field of the **General** tab, you can find the information required for the second region.
+Imagine, if we know we have customers in Europe and Asia, but only one app instance in North America.... that would mean all of the **dynamic** interactions with the database, for eample, is still hapenning on that one app instance far... far.. away, and your customers' experience would be subpar! 
+
+No worries, F5 Essential App Protect makes it super easy to add a second endpoint, and to have EAP automatiically apply all of the config such as protection policy and AWS CloudFront configuration. You will now go ahead and add another app endpoint, which should be much closer geographically to where you are located (it's a neat thing we built into this lab). So let's do this!
+
+`a)` Go to the F5 Cloud Services Portal, the **PROTECT APPLICATION** card. There, under the **General** tab and in the **Description** field you will can find information for the second app instance IP address and the **required AWS region** of where you should deploy your second Essential App Protect region.
+
+*NOTE: In our example below the required second endpoint needs to be located in Europe in **eu-west-3**. We ask that you please select the region you were assigned indicated in his description, because selecting a different AWS deployment region **can impact capacity and therefore customer experience**. So let's do the right thing and select the right region, right? Of course, your second app IP and Region are likely to be different, as what you see below is just an example.*
 
 .. figure:: _figures/info_in_description.png
 
@@ -131,21 +155,28 @@ For now, our app only has one endpoint located in US East (N. Virginia) and depl
 
 .. figure:: _figures/add_region_details.png
 
-The application will be deployed to the second region. It will take several minutes to complete.
+The application will be deployed to the second region. Now, the routing of traffic happens based both on Latency *and* availability of the endpoint. That means there's still a chance the app instance far away may be used just because the closer one was busy. However, most of the time you will probably get the 2nd region if it is indeed closer to you geographically.
+
+It will take several minutes to complete, and during this time we will do a quick journey through some useful new features of the Essential App Protect and let the configuration do its thing.
 
 .. figure:: _figures/add_region_deploying.png
 
-When the app is deployed, you will see the **Active** state indicator.
+5. A Quick Run-through a Few of the New Features in Essential App Protect (while we wait)
+*****************************************************************************************
+
+
+
+
+4. Latency Tests of the 2nd Region with CloudFront 
+************************************************************************
+
+OK, by now that second EAP region should be deployed and configured, and you should see the **Active** state indicator. If not, refresh just to be sure -- and note that in some regions things may just take a bit longer. For example, in our Lab tests us-west-2 (Oregon) took on average 20-25 mins to deploy the second region; by comparison eu-west-3 (Paris) was much faster. 
 
 .. figure:: _figures/add_region_active.png
 
-Now let's open the app in the browser and we will see that the region changed to the closed one.
+Now open the BuyTime app (using the app FQDN) in the browser and, hopefullly, you will see that the app instance has changed to the one much closer to you geographically. If it didn't, there are some possible things that may have happened. 
 
 .. figure:: _figures/region_europe.png
-
-4. CloudFront Caching
-************************************************************************
-
 Lets open the Developer tools by pressing Ctrl+Shift+I or From "Browser settings" => "More tools" => "Developer tools". Open the Network tab and disable caching and preserve logs.
 
 .. figure:: _figures/dev_tools.png
