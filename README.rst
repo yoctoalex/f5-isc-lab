@@ -56,7 +56,7 @@ Running the Lab
 1. Getting started with the Lab Environment
 ************************************************************************
 
-`a)` In your email, accept the invite that was sent you for this lab. Note the unique ID for the Organization (ISC-Lab-$$$) that you were asked to join, where $$$ will be your own personalized ISC Lab Organization ID (Org ID). Take note of this Org ID, you will need it later. 
+`a)` Accept the invite in the email from F5 Cloud Services that was sent you for this lab. Note the unique ID for the Organization (ISC-Lab-$$$) that you were asked to join, where $$$ will be your own personalized ISC Lab Organization ID (Org ID). Take note of this Org ID, you will need it later. 
 
 .. figure:: _figures/invite.png
 
