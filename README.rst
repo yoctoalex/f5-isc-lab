@@ -93,7 +93,7 @@ But, no worries! This app has already been configured with F5 Essential App Prot
 
 .. figure:: _figures/sql_attack_turn_on.png
 
-`c)` And now simulate the attack again by repeating the step **a)** above. This time it will be blocked by Essential App Protect.
+`c)` And now simulate the attack again by repeating the step **a)** above (just paste https://yourFQDN into the browser to get the login page again). This time it will be blocked by Essential App Protect.
 
 .. figure:: _figures/sql_attack_blocked.png
 
