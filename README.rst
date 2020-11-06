@@ -75,7 +75,7 @@ Alright. Now you want to "kick the tires" on the app, to see just how poorly it 
 
 Let's now follow the steps below to send a SQL Injection attack via browser to our "BuyTime Auction" app. 
 
-`a)` Copy your FQDN from the F5 Cloud Services Portal. You can get to your app protection settings by clicking "Protect Application" menu in the top middle of the EAP dashboard; the FQDN is located under "General Tab" => "Application Details". You will be using this FQDN for the next task as well, so take note of it and also the IP address of the server where your app is deployed. Also take note of the AWS Region for your deployed app -- it should be far from you geographically, and this will become important in Step 2. But before we do that, let's get attackin'!
+`a)` Copy your FQDN from the F5 Cloud Services Portal. You can get to your app protection settings by clicking "Protect Application" menu in the top middle of the EAP dashboard; the FQDN is located under "General Tab" => "Application Details". You will be using this FQDN for the next task as well, so take note of it and also the IP address of the server where your app is deployed. The IP address is shown on the right bottom under the deployed AWS Region. Also take note of the AWS Region for your deployed app -- it should be far from you geographically, and this will become important in Step 2. But before we do that, let's get attackin'!
 
 Paste the FQDN into your browser (https://yourFQDN); note that if you use http:// in the URL, then the EAP configuration will use the HTTP listener redirect to HTTPS protocol. The BuyTime auction site should load, served up by the NGINX app instance that you are currently protecting. You can explore around a bit here.
 
